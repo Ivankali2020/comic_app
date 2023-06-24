@@ -90,7 +90,6 @@ class _ComicDetailState extends State<ComicDetail> {
                                 const Icon(Icons.error),
                           ),
                           title: Text(e.episodeTitle),
-                          subtitle: Text(e.isRead.toString()),
                           trailing: InkWell(
                             borderRadius: BorderRadius.circular(8),
                             overlayColor: MaterialStateProperty.all(

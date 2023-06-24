@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:comic/Modal/Comic.dart';
 import 'package:comic/Provider/ComicProvider.dart';
 import 'package:comic/Widgets/Loading.dart';
+import 'package:comic/Widgets/SnackBarWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -29,10 +30,18 @@ class _ComicBookState extends State<ComicBook> {
         ),
         actions: [
           IconButton(
-              onPressed: () {
+              onPressed: () async {
                 episode.readDone();
-                Provider.of<ComicProvider>(context, listen: false)
-                    .save(episode.id);
+                print(episode.isRead);
+                final response =
+                    await Provider.of<ComicProvider>(context, listen: false)
+                        .save(episode.id);
+
+                if (response) {
+                  snackBarWidget(context, 'Saved');
+                }else{
+                   snackBarWidget(context, 'Login Required!');
+                }
               },
               icon: const Icon(Icons.bookmark_add_outlined))
         ],

@@ -103,7 +103,7 @@ class UserProvider with ChangeNotifier {
     final response = await http.post(url, headers: customHeaders, body: data);
     final json = jsonDecode(response.body);
 
-    if (json['status'] == 'success') {
+    if (json['status']) {
       userData!.name = rawData['name'];
       userData!.credentials = rawData['credentials'];
       notifyListeners();
@@ -130,7 +130,7 @@ class UserProvider with ChangeNotifier {
     final response = await send.stream.bytesToString();
 
     final json = jsonDecode(response);
-    if (json['status'] == 'success') {
+    if (json['status']) {
       userData!.photo = json['data']['photo'];
       notifyListeners();
       return {'status': true, 'message': json['message']};
@@ -140,20 +140,20 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> logOut() async {
-    final Map<String, String> customHeaders = {
+    final Map<String, String> header = {
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'
     };
     final url = Uri.parse(Http.coreUrl + "/logout");
-    final response = await http.post(url, headers: customHeaders);
+    final response = await http.post(url, headers: header);
     final json = jsonDecode(response.body);
 
-    if (json['status'] == 'success') {
+
+    if (json['status']) {
       token = '';
       userData = null;
-
       AuthManager.removeUserAndToken();
+
       notifyListeners();
       return {'status': true, 'message': json['data']};
     }

@@ -163,7 +163,9 @@ class _HomeState extends State<Home> {
             ),
             Expanded(
               flex: 1,
-              child: FetchComicFuture(context),
+              child: RefreshIndicator(
+              onRefresh: () => Provider.of<ComicProvider>(context, listen: false).fetchComics(),
+                child: FetchComicFuture(context)),
             ),
           ],
         ),
@@ -234,57 +236,58 @@ class _HomeState extends State<Home> {
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
-          Container(
-            height: 150,
-            width: 250,
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FittedBox(
-                  fit: BoxFit.cover,
-                  child: Text(
-                    comic.name,
-                    overflow: TextOverflow.fade,
-                    softWrap: true,
-                    style: GoogleFonts.bebasNeue(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+          Expanded(
+            child: Container(
+              height: 150,
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FittedBox(
+                    fit: BoxFit.cover,
+                    child: Text(
+                      comic.name,
+                      overflow: TextOverflow.fade,
+                      softWrap: true,
+                      style: GoogleFonts.bebasNeue(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                ),
-                Text(
-                  "Category : ${comic.categoryName}",
-                  style: GoogleFonts.nunito(
-                      fontWeight: FontWeight.normal, fontSize: 13),
-                ),
-                Text(
-                  "Author : ${comic.authorName}",
-                  style: GoogleFonts.nunito(
-                      fontWeight: FontWeight.normal, fontSize: 13),
-                ),
-                Container(
-                  alignment: Alignment.bottomRight,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(8),
-                    overlayColor: MaterialStateProperty.all(
-                        Theme.of(context).colorScheme.tertiaryContainer),
-                    focusColor: Theme.of(context).colorScheme.tertiaryContainer,
-                    splashColor: Theme.of(context).colorScheme.secondaryContainer,
-                    onTap: () => detailPage(comic),
-                    child: Container(
-                      width: 100,
-                      height: 30,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Text('Detail'),
+                  Text(
+                    "Category : ${comic.categoryName}",
+                    style: GoogleFonts.nunito(
+                        fontWeight: FontWeight.normal, fontSize: 13),
+                  ),
+                  Text(
+                    "Author : ${comic.authorName}",
+                    style: GoogleFonts.nunito(
+                        fontWeight: FontWeight.normal, fontSize: 13),
+                  ),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(8),
+                      overlayColor: MaterialStateProperty.all(
+                          Theme.of(context).colorScheme.tertiaryContainer),
+                      focusColor: Theme.of(context).colorScheme.tertiaryContainer,
+                      splashColor: Theme.of(context).colorScheme.secondaryContainer,
+                      onTap: () => detailPage(comic),
+                      child: Container(
+                        width: 100,
+                        height: 30,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Text('Detail'),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

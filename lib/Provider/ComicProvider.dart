@@ -121,7 +121,7 @@ class ComicProvider with ChangeNotifier {
     }
   }
 
-  Future<void> save(int id) async {
+  Future<bool> save(int id) async {
     final url = Uri.parse(coreUrl + '/save/$id');
 
     final customHeaders = {
@@ -142,11 +142,15 @@ class ComicProvider with ChangeNotifier {
 
       final json = jsonDecode(res.body);
       print(json);
-      if (res.statusCode == 200 && json['status']) {}
+      if (res.statusCode == 200 && json['status']) {
+        return true;
+      }
       notifyListeners();
     } catch (err) {
       print(err);
+      return false;
     }
+    return false;
   }
 
   bool isLoadingProducts = false;
