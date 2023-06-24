@@ -108,10 +108,10 @@ FutureBuilder<void> FetchComicFuture(
                 padding: const EdgeInsets.all(16),
                 physics: const BouncingScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 0.65,
+                  childAspectRatio: 0.55,
                   crossAxisCount: 2,
-                  mainAxisSpacing: 4.0,
-                  crossAxisSpacing: 4.0,
+                  mainAxisSpacing: 14.0,
+                  crossAxisSpacing: 14.0,
                 ),
                 itemCount: comics.comicsCategory.length + 1,
                 itemBuilder: (context, index) {
@@ -149,9 +149,9 @@ Container ComicItem(Comic comic, BuildContext context) {
           borderRadius: BorderRadius.circular(10),
           child: CachedNetworkImage(
             imageUrl: comic.cover,
-            fit: BoxFit.contain,
-            height: 150,
-            width: 150,
+            fit: BoxFit.cover,
+            height: 180,
+            width: double.infinity,
             placeholder: (context, url) => const Center(
               child: Loading('Getting ', double.infinity, 200, 10),
             ),
@@ -159,7 +159,7 @@ Container ComicItem(Comic comic, BuildContext context) {
           ),
         ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal:20.0,vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal:5.0,vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -175,17 +175,19 @@ Container ComicItem(Comic comic, BuildContext context) {
                   ),
                 ),
               ),
+              const SizedBox(height: 6,),
               Text(
                 "${comic.categoryName}",
                 style: GoogleFonts.nunito(
                     fontWeight: FontWeight.normal, fontSize: 13),
               ),
+             const SizedBox(height: 6,),
               Text(
                 "${comic.authorName}",
                 style: GoogleFonts.nunito(
                     fontWeight: FontWeight.normal, fontSize: 13),
               ),
-              SizedBox(height: 10,),
+             const SizedBox(height: 10,),
               Container(
                 alignment: Alignment.bottomRight,
                 child: InkWell(

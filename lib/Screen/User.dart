@@ -5,6 +5,7 @@ import 'package:comic/Provider/UserProvider.dart';
 import 'package:comic/Screen/Auth/Login.dart';
 import 'package:comic/Screen/Home.dart';
 import 'package:comic/Widgets/SnackBarWidget.dart';
+import 'package:comic/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +58,7 @@ class _UserState extends State<User> {
       if (response['status']) {
         snackBarWidget(context, response['message']);
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Home()));
+            .push(MaterialPageRoute(builder: (context) => const MyApp()));
       } else {
         snackBarWidget(context, response['message']);
       }
